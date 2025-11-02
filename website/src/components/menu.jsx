@@ -88,7 +88,7 @@ const Menu = () => {
         name: "Goat Stew",
         price: 10,
         description: "Tender goat meat in rich sauce",
-        image: "/23.jpg",
+        image: "/4.jpg",
         ingredients: ["Goat meat", "Tomatoes", "Onions", "Traditional herbs"],
       },
       {
