@@ -225,7 +225,7 @@ const Menu = () => {
         description: "Our signature combo platter",
         featured: true,
         image:
-          "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=80",
+          "/sig.jpg",
         ingredients: ["Sadza", "Mixed meats", "Vegetables", "Signature sauce"],
       },
       {
@@ -234,7 +234,7 @@ const Menu = () => {
         description: "The hunter's feast",
         featured: true,
         image:
-          "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=800&q=80",
+          "/26.jpg",
         ingredients: ["Premium selection", "Multiple proteins", "Full spread"],
       },
       {
@@ -242,7 +242,7 @@ const Menu = () => {
         price: 18,
         description: "Perfect family combo",
         image:
-          "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80",
+          "/11.jpg",
         ingredients: ["Family portions", "Variety of sides", "Complete meal"],
       },
       {
@@ -250,7 +250,7 @@ const Menu = () => {
         price: 18,
         description: "Traditional complete meal",
         image:
-          "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=800&q=80",
+          "/99.jpg",
         ingredients: ["Sadza", "Meat", "Vegetables", "Traditional sides"],
       },
       {
@@ -258,7 +258,7 @@ const Menu = () => {
         price: 15,
         description: "Today's special selection",
         image:
-          "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=800&q=80",
+          "/12.jpg",
         ingredients: [
           "Chef's selection",
           "Daily special",
@@ -270,7 +270,7 @@ const Menu = () => {
         price: 4,
         description: "Side combo",
         image:
-          "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=800&q=80",
+          "/44.jpg",
         ingredients: ["Assorted sides", "Perfect addition"],
       },
     ],
@@ -280,7 +280,7 @@ const Menu = () => {
         price: 2,
         description: "Rice with peanut butter sauce",
         image:
-          "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=800&q=80",
+          "/13.jpg",
         ingredients: ["Rice", "Peanut butter sauce", "Traditional preparation"],
       },
       {
@@ -288,7 +288,7 @@ const Menu = () => {
         price: 2,
         description: "Finger millet porridge",
         image:
-          "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=800&q=80",
+          "/27.jpg",
         ingredients: ["Finger millet", "Traditional recipe"],
       },
       {
@@ -296,7 +296,7 @@ const Menu = () => {
         price: 2,
         description: "Bambara nuts",
         image:
-          "https://images.unsplash.com/photo-1608797178974-15b35a64ede9?w=800&q=80",
+          "/27.jpg",
         ingredients: ["Bambara nuts", "Perfectly prepared"],
       },
       {
@@ -305,7 +305,7 @@ const Menu = () => {
         description: "Traditional maize meal",
         popular: true,
         image:
-          "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80",
+          "/16.jpg",
         ingredients: ["Fine maize meal", "Traditionally cooked"],
       },
       {
@@ -313,7 +313,7 @@ const Menu = () => {
         price: 2,
         description: "Sorghum meal",
         image:
-          "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=800&q=80",
+          "/33.jpg",
         ingredients: ["Sorghum", "Traditional method"],
       },
       {
@@ -321,7 +321,7 @@ const Menu = () => {
         price: 3,
         description: "Hand-cut fries",
         image:
-          "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=800&q=80",
+          "/25.jpg",
         ingredients: ["Fresh potatoes", "Hand-cut", "Crispy golden"],
       },
     ],
@@ -331,7 +331,7 @@ const Menu = () => {
         price: 6,
         description: "Fresh garden greens",
         image:
-          "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80",
+          "/20.jpg",
         ingredients: ["Mixed greens", "Fresh vegetables", "House dressing"],
       },
       {
@@ -339,7 +339,7 @@ const Menu = () => {
         price: 10,
         description: "Grilled chicken with greens",
         image:
-          "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=80",
+          "/20.jpg",
         ingredients: ["Grilled chicken", "Mixed greens", "Special dressing"],
       },
     ],
@@ -349,7 +349,7 @@ const Menu = () => {
         price: 2,
         description: "Fresh fruit juices",
         image:
-          "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=800&q=80",
+          "/juice.avif",
         ingredients: ["Fresh fruits", "No added sugar"],
       },
       {
@@ -357,7 +357,7 @@ const Menu = () => {
         price: 2,
         description: "Bottled juice",
         image:
-          "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=800&q=80",
+          "/min.jpg",
         ingredients: ["Minute Maid brand", "Various flavors"],
       },
       {
@@ -389,7 +389,7 @@ const Menu = () => {
         price: 15,
         description: "Selection of wines",
         image:
-          "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=800&q=80",
+          "/wine.jpg",
         ingredients: ["Red & white wines", "Premium selection"],
       },
     ],
