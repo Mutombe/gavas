@@ -641,7 +641,7 @@ Please confirm my order. Thank you!`;
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm pt-24"
             onClick={() => setSelectedItem(null)}
           >
             <motion.div
@@ -649,7 +649,7 @@ Please confirm my order. Thank you!`;
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative bg-white rounded-sm max-w-2xl w-full max-h-[90vh] overflow-hidden shadow-2xl"
+              className="relative bg-white rounded-sm max-w-2xl w-full max-h-[90vh] overflow-hidden shadow-2xl "
             >
               {/* Full Background Image */}
               <div className="absolute inset-0">
