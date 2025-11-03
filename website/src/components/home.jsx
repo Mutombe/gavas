@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
   Utensils,
@@ -11,6 +11,11 @@ import {
   Mail,
   Star,
   ChefHat,
+  X,
+  Plus,
+  Minus,
+  ShoppingCart,
+  MessageCircle,
 } from "lucide-react";
 import { MdStarPurple500 } from "react-icons/md";
 import { LiaUtensilsSolid } from "react-icons/lia";
@@ -18,7 +23,11 @@ import { PiPersonSimpleBikeBold } from "react-icons/pi";
 import { IoLogoWhatsapp } from "react-icons/io";
 
 const Home = () => {
-   const features = [
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [quantity, setQuantity] = useState(1);
+  const [specialInstructions, setSpecialInstructions] = useState("");
+
+  const features = [
     {
       icon: <LiaUtensilsSolid className="w-8 h-8" />,
       title: "Traditional Cuisine",
@@ -26,6 +35,7 @@ const Home = () => {
       color: "from-red-500 to-red-700",
       bgImage: "/9.jpeg",
       overlayColor: "from-red-600/90 to-red-800/90",
+      link: "/taste-tradition",
     },
     {
       icon: <Music className="w-8 h-8" />,
@@ -34,6 +44,7 @@ const Home = () => {
       color: "from-amber-500 to-orange-600",
       bgImage: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&q=80",
       overlayColor: "from-orange-600/90 to-amber-700/90",
+      link: "/join-the-family",
     },
     {
       icon: <PiPersonSimpleBikeBold className="w-8 h-8" />,
@@ -42,6 +53,7 @@ const Home = () => {
       color: "from-blue-500 to-blue-700",
       bgImage: "https://images.unsplash.com/photo-1526367790999-0150786686a2?w=800&q=80",
       overlayColor: "from-blue-600/90 to-blue-800/90",
+      link: "/taste-tradition",
     },
     {
       icon: <Calendar className="w-8 h-8" />,
@@ -50,6 +62,7 @@ const Home = () => {
       color: "from-green-500 to-green-700",
       bgImage: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&q=80",
       overlayColor: "from-green-600/90 to-green-800/90",
+      link: "/join-the-family",
     },
   ];
 
@@ -60,7 +73,7 @@ const Home = () => {
     { number: "100%", label: "Local Ingredients" },
   ];
 
-    const handleAction = (action) => {
+  const handleAction = (action) => {
     if (action === "call") {
       window.location.href = "tel:+263785948128";
     } else if (action === "email") {
@@ -69,6 +82,37 @@ const Home = () => {
       window.location.href =
         "https://wa.me/263785948128?text=Hello!%20I%20would%20like%20to%20place%20an%20order.";
     }
+  };
+
+  const handleOrderNow = (item) => {
+    console.log("handleOrderNow called with:", item);
+    setSelectedItem(item);
+    setQuantity(1);
+    setSpecialInstructions("");
+  };
+
+  const handleWhatsAppOrder = () => {
+    const total = selectedItem.price * quantity;
+    const message = `Hello Gava's Restaurant! 🍽️
+
+I would like to order:
+━━━━━━━━━━━━━━━━━━
+📦 *${selectedItem.name}*
+💵 Price: $${selectedItem.price}
+🔢 Quantity: ${quantity}
+💰 Total: $${total}
+
+${
+  specialInstructions
+    ? `📝 Special Instructions:\n${specialInstructions}\n`
+    : ""
+}━━━━━━━━━━━━━━━━━━
+
+Please confirm my order. Thank you!`;
+
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/263785948128?text=${encodedMessage}`;
+    window.open(whatsappUrl, "_blank");
   };
 
   return (
@@ -349,57 +393,61 @@ const Home = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
-              <motion.div
+              <Link
                 key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -10, scale: 1.02 }}
-                className="group relative overflow-hidden rounded-sm shadow-xl"
+                to={feature.link}
               >
-                {/* Background Image */}
-                <div 
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
-                  style={{ backgroundImage: `url(${feature.bgImage})` }}
-                />
-                
-                {/* Colored Overlay */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${feature.overlayColor} mix-blend-multiply`} />
-                
-                {/* Subtle Pattern Overlay */}
-                <div className="absolute inset-0 opacity-10">
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)",
-                      backgroundSize: "30px 30px",
-                    }}
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ y: -10, scale: 1.02 }}
+                  className="group relative overflow-hidden rounded-sm shadow-xl cursor-pointer"
+                >
+                  {/* Background Image */}
+                  <div 
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                    style={{ backgroundImage: `url(${feature.bgImage})` }}
                   />
-                </div>
-
-                {/* Glow Effect on Hover */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-30 transition-opacity rounded-sm blur-xl`} />
-                
-                {/* Content */}
-                <div className="relative z-10 p-8 h-full flex flex-col">
-                  <div
-                    className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-sm flex items-center justify-center text-white mb-6 transform group-hover:scale-110 group-hover:bg-white/30 transition-all border border-white/30"
-                  >
-                    {feature.icon}
-                  </div>
-                  <h3 className="text-2xl font-bold text-white mb-3 drop-shadow-lg">
-                    {feature.title}
-                  </h3>
-                  <p className="text-white/90 text-sm leading-relaxed drop-shadow">
-                    {feature.description}
-                  </p>
                   
-                  {/* Decorative Corner Element */}
-                  <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-white/30 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-white/30 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-              </motion.div>
+                  {/* Colored Overlay */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${feature.overlayColor} mix-blend-multiply`} />
+                  
+                  {/* Subtle Pattern Overlay */}
+                  <div className="absolute inset-0 opacity-10">
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)",
+                        backgroundSize: "30px 30px",
+                      }}
+                    />
+                  </div>
+
+                  {/* Glow Effect on Hover */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-30 transition-opacity rounded-sm blur-xl`} />
+                  
+                  {/* Content */}
+                  <div className="relative z-10 p-8 h-full flex flex-col">
+                    <div
+                      className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-sm flex items-center justify-center text-white mb-6 transform group-hover:scale-110 group-hover:bg-white/30 transition-all border border-white/30"
+                    >
+                      {feature.icon}
+                    </div>
+                    <h3 className="text-2xl font-bold text-white mb-3 drop-shadow-lg">
+                      {feature.title}
+                    </h3>
+                    <p className="text-white/90 text-sm leading-relaxed drop-shadow">
+                      {feature.description}
+                    </p>
+                    
+                    {/* Decorative Corner Element */}
+                    <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-white/30 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-white/30 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                </motion.div>
+              </Link>
             ))}
           </div>
         </div>
@@ -441,24 +489,24 @@ const Home = () => {
             {[
               {
                 name: "Mutongi Gava",
-                price: "$25",
+                price: 25,
                 description: "Our signature combo platter with sadza, vegetables, and grilled meat",
                 image: "/sig.jpg",
-                ingredients: "Sadza • Beef • Vegetables"
+                ingredients: ["Sadza", "Beef", "Vegetables"]
               },
               {
                 name: "Oxtail Stew",
-                price: "$20",
+                price: 20,
                 description: "Slow-cooked to perfection with rich, savory flavors",
                 image: "/1.jpg",
-                ingredients: "Oxtail • Tomatoes • Herbs"
+                ingredients: ["Oxtail", "Tomatoes", "Herbs"]
               },
               {
                 name: "Whole Kariba Bream",
-                price: "$15",
+                price: 15,
                 description: "Fresh from the lake, grilled to golden perfection",
                 image: "/bream.jpg",
-                ingredients: "Bream • Lemon • Spices"
+                ingredients: ["Bream", "Lemon", "Spices"]
               },
             ].map((dish, index) => (
               <motion.div
@@ -468,26 +516,26 @@ const Home = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -8 }}
-                className="group relative h-[450px] rounded-sm overflow-hidden cursor-pointer shadow-2xl"
+                className="group relative h-[450px] rounded-sm overflow-hidden shadow-2xl"
               >
                 {/* Background Image */}
                 <div 
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 pointer-events-none"
                   style={{ backgroundImage: `url(${dish.image})` }}
                 />
                 
                 {/* Overlay Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-black/60" />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-black/60 pointer-events-none z-10" />
                 
                 {/* Top-Left Content */}
-                <div className="absolute top-0 left-0 right-0 p-6">
-                  <div className="bg-black/40 backdrop-blur-md rounded-sm p-5 border border-white/10 transform transition-all duration-300 group-hover:bg-black/50">
+                <div className="absolute top-0 left-0 right-0 p-6 z-20">
+                  <div className="bg-black/40 backdrop-blur-md rounded-sm p-5 border border-white/10 transform transition-all duration-300 group-hover:bg-black/50 pointer-events-none">
                     <div className="flex items-start justify-between mb-3">
                       <h3 className="text-2xl font-bold text-white leading-tight pr-2">
                         {dish.name}
                       </h3>
                       <span className="text-yellow-300 text-2xl font-bold whitespace-nowrap bg-black/30 px-3 py-1 rounded-sm">
-                        {dish.price}
+                        ${dish.price}
                       </span>
                     </div>
                     <p className="text-white/90 text-sm leading-relaxed mb-3">
@@ -495,14 +543,14 @@ const Home = () => {
                     </p>
                     <div className="flex items-center space-x-2 text-xs text-white/70">
                       <span className="bg-white/10 px-2 py-1 rounded-sm">
-                        {dish.ingredients}
+                        {dish.ingredients.join(" • ")}
                       </span>
                     </div>
                   </div>
                 </div>
                 
                 {/* Bottom Rating & Order Button */}
-                <div className="absolute bottom-0 left-0 right-0 p-6">
+                <div className="absolute bottom-0 left-0 right-0 p-6 z-30">
                   <div className="bg-white/95 backdrop-blur-sm rounded-sm p-4 transform transition-all duration-300 group-hover:bg-white">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-1 text-yellow-500">
@@ -513,7 +561,15 @@ const Home = () => {
                           5.0
                         </span>
                       </div>
-                      <button className="bg-[#8B0000] text-white px-4 py-2 rounded-sm text-sm font-bold hover:bg-[#a31e1e] transition-colors flex items-center space-x-2">
+                      <button 
+                        onClick={(e) => {
+                          console.log("Button clicked!", dish.name);
+                          e.preventDefault();
+                          e.stopPropagation();
+                          handleOrderNow(dish);
+                        }}
+                        className="bg-[#8B0000] text-white px-4 py-2 rounded-sm text-sm font-bold hover:bg-[#a31e1e] transition-colors flex items-center space-x-2 relative z-50"
+                      >
                         <span>Order Now</span>
                         <ArrowRight className="w-4 h-4" />
                       </button>
@@ -522,7 +578,7 @@ const Home = () => {
                 </div>
                 
                 {/* Hover Glow Effect */}
-                <div className="absolute inset-0 ring-2 ring-yellow-300/0 group-hover:ring-yellow-300/50 rounded-2xl transition-all duration-300" />
+                <div className="absolute inset-0 ring-2 ring-yellow-300/0 group-hover:ring-yellow-300/50 rounded-2xl transition-all duration-300 pointer-events-none z-20" />
               </motion.div>
             ))}
           </div>
@@ -543,6 +599,180 @@ const Home = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* Order Modal */}
+      <AnimatePresence>
+        {selectedItem && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+            onClick={() => setSelectedItem(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative bg-white rounded-sm max-w-2xl w-full max-h-[90vh] overflow-hidden shadow-2xl"
+            >
+              {/* Full Background Image */}
+              <div className="absolute inset-0">
+                <img
+                  src={selectedItem.image}
+                  alt={selectedItem.name}
+                  className="w-full h-full object-cover opacity-30"
+                />
+              </div>
+
+              {/* Content Overlay */}
+              <div className="relative z-10 max-h-[90vh] overflow-y-auto">
+                {/* Modal Header with Image */}
+                <div className="relative h-64 rounded-t-sm overflow-hidden">
+                  <img
+                    src={selectedItem.image}
+                    alt={selectedItem.name}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+
+                  {/* Close Button */}
+                  <button
+                    onClick={() => setSelectedItem(null)}
+                    className="absolute top-4 right-4 bg-white/20 backdrop-blur-md p-2 rounded-sm hover:bg-white/30 transition-all"
+                  >
+                    <X className="w-6 h-6 text-white" />
+                  </button>
+
+                  {/* Item Name & Price */}
+                  <div className="absolute bottom-6 left-6 right-6">
+                    <h2 className="text-3xl font-bold text-white mb-2 drop-shadow-lg">
+                      {selectedItem.name}
+                    </h2>
+                    <div className="flex items-center justify-between">
+                      <span className="text-2xl font-bold text-yellow-300 drop-shadow-lg">
+                        ${selectedItem.price}
+                      </span>
+                      <div className="flex items-center space-x-1">
+                        {[...Array(5)].map((_, i) => (
+                          <svg
+                            key={i}
+                            className="w-5 h-5 text-yellow-400 fill-current drop-shadow"
+                            viewBox="0 0 20 20"
+                          >
+                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                          </svg>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Modal Content with Background */}
+                <div className="relative p-8">
+                  {/* Semi-transparent white background for content area */}
+                  <div className="absolute inset-0 bg-white/95 backdrop-blur-md" />
+
+                  <div className="relative">
+                    {/* Description */}
+                    <div className="mb-6">
+                      <h3 className="text-lg font-bold text-gray-800 mb-2">
+                        Description
+                      </h3>
+                      <p className="text-gray-600">
+                        {selectedItem.description}
+                      </p>
+                    </div>
+
+                    {/* Ingredients */}
+                    {selectedItem.ingredients && (
+                      <div className="mb-6">
+                        <h3 className="text-lg font-bold text-gray-800 mb-3">
+                          Ingredients
+                        </h3>
+                        <div className="flex flex-wrap gap-2">
+                          {selectedItem.ingredients.map((ingredient, index) => (
+                            <span
+                              key={index}
+                              className="bg-gradient-to-r from-red-50 to-orange-50 text-gray-700 px-3 py-1 rounded-sm text-sm border border-red-100"
+                            >
+                              {ingredient}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Quantity Selector */}
+                    <div className="mb-6">
+                      <h3 className="text-lg font-bold text-gray-800 mb-3">
+                        Quantity
+                      </h3>
+                      <div className="flex items-center space-x-4">
+                        <button
+                          onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                          className="bg-gray-100 hover:bg-gray-200 p-3 rounded-sm transition-colors"
+                        >
+                          <Minus className="w-5 h-5 text-gray-700" />
+                        </button>
+                        <span className="text-2xl font-bold text-gray-800 min-w-[3rem] text-center">
+                          {quantity}
+                        </span>
+                        <button
+                          onClick={() => setQuantity(quantity + 1)}
+                          className="bg-gray-100 hover:bg-gray-200 p-3 rounded-sm transition-colors"
+                        >
+                          <Plus className="w-5 h-5 text-gray-700" />
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Special Instructions */}
+                    <div className="mb-6">
+                      <h3 className="text-lg font-bold text-gray-800 mb-3">
+                        Special Instructions (Optional)
+                      </h3>
+                      <textarea
+                        value={specialInstructions}
+                        onChange={(e) => setSpecialInstructions(e.target.value)}
+                        placeholder="Any allergies or special requests?"
+                        className="w-full border-2 border-gray-200 rounded-sm p-4 focus:border-[#df2531] focus:outline-none transition-colors resize-none bg-white"
+                        rows="3"
+                      />
+                    </div>
+
+                    {/* Total */}
+                    <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-sm p-6 mb-6 border border-red-100">
+                      <div className="flex justify-between items-center">
+                        <span className="text-lg font-semibold text-gray-700">
+                          Total Amount:
+                        </span>
+                        <span className="text-3xl font-bold text-[#df2531]">
+                          ${selectedItem.price * quantity}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* WhatsApp Order Button */}
+                    <button
+                      onClick={handleWhatsAppOrder}
+                      className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-8 py-4 rounded-sm font-bold transition-all transform hover:scale-105 flex items-center justify-center space-x-3 shadow-xl"
+                    >
+                      <MessageCircle className="w-6 h-6" />
+                      <span>Order via WhatsApp</span>
+                    </button>
+
+                    <p className="text-center text-gray-500 text-sm mt-4">
+                      You'll be redirected to WhatsApp to complete your order
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-br from-stone-100 to-stone-200">
